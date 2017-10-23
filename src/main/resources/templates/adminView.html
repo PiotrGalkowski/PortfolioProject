@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Portfolio">
+    <meta name="author" content="Piotr Gałkowski">
+
+    <title>Panel Administratora</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
+
+    <!-- Theme CSS -->
+    <link href="css/freelancer.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <![endif]-->
+
+</head>
+
+<body id="page-top" class="index">
+
+<div id="skipnav" style=""><a href="#maincontent">Skip to main content</a></div>
+<!-- Navigation -->
+<nav id="mainNav" class="navbar navbar-default navbar-fixed-top navbar-custom">
+    <div class="container">
+        <div th:if ="${success}" id="success" class="alert alert-success alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            Dziękuje za kontakt, wiadomość została wysłana pomyślnie!
+        </div>
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+            </button>
+            <a class="navbar-brand" href="#page-top">Administrator</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <div class="nav navbar-nav">
+                <form th:action="@{/logout}" method="get">
+                    <input type="submit" value="Wyloguj">
+                </form>
+            </div>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="hidden">
+                    <a href="#page-top"></a>
+                </li>
+                <li class="page-scroll">
+                    <a href="#about">O mnie</a>
+                </li>
+                <li class="page-scroll">
+                    <a href="#portfolio">Portfolio</a>
+                </li>
+                <li class="page-scroll">
+                    <a href="#contact">Kontakt</a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container-fluid -->
+
+</nav>
+
+<!-- Header -->
+<header>
+    <div class="container" id="maincontent" tabindex="-1">
+        <div class="row">
+            <div class="col-lg-12">
+                <img src="img/profile.png" class="img-responsive img-thumbnail" alt="Profiles Photo">
+                <div class="intro-text">
+                    <h1 class="name">Piotr Gałkowski</h1>
+                    <hr>
+                    <span class="skills">Junior Java Developer</span><br><br>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+<!-- About Section -->
+<section class="success" id="about">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h2>O mnie</h2><br>
+            </div>
+        </div>
+        <th:block th:each="aboutMe: ${about}">
+        <div class="row">
+                <div>
+                    <p th:text="${aboutMe.description}"></p>
+                    <br>
+                    <form action="/adminView" th:action="@{/adminView}" method="post">
+                        <div class="row control-group">
+                            <div class="form-group col-xs-12 floating-label-form-group controls">
+                                <label for="message">Wiadomość</label>
+                                <textarea rows="8" th:name="description" class="form-control" placeholder="Wpisz nowy opis lub wklej i edytuj poprzedni" id="message" required data-validation-required-message="Opis"></textarea>
+                                <p class="help-block text-danger"></p>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-right btn-success btn-lg">Zapisz</button>
+                    </form>
+                </div>
+            </div>
+        </th:block>
+    </div>
+</section>
+
+<!-- Portfolio Grid Section -->
+<section class="port" id="portfolio">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h2>Obecne projekty:</h2>
+                <hr>
+            </div>
+        </div>
+        <div class="row">
+            <th:block th:each="project : ${projects}">
+                <div class="col-sm-4 portfolio-item">
+                    <p th:text="${project.name}"></p>
+                    <a th:href="'#' + ${project.id}" class="portfolio-link" data-toggle="modal">
+                        <div class="caption">
+                            <div class="caption-content">
+                                <i class="fa fa-search-plus fa-3x"></i>
+                            </div>
+                        </div>
+                        <img th:src="'img/portfolio/' + ${project.image} + '.png'" class="img-responsive" alt="Project Photo" style="">
+                    </a>
+                </div>
+            </th:block>
+            <div class="col-sm-4 portfolio-item">
+                <p>Dodaj kolejny projekt</p>
+                <a href="#portfolioUpdate" class="portfolio-link" data-toggle="modal">
+                    <div class="caption">
+                        <div class="caption-content">
+                            <i class="fa fa-search-plus fa-3x"></i>
+                        </div>
+                    </div>
+                    <img src="img/portfolio/new.png" class="img-responsive" alt="Project Photo" style="">
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- Contact Section -->
+
+
+<!-- Footer -->
+<footer class="text-center">
+    <div class="footer-below">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    Copyright &copy; Portfolio Piotr Gałkowski 2017.
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
+<div class="scroll-top page-scroll hidden-sm hidden-xs hidden-lg hidden-md">
+    <a class="btn btn-primary" href="#page-top">
+        <i class="fa fa-chevron-up"></i>
+    </a>
+</div>
+
+<!-- Portfolio Modals -->
+<th:block th:each="project : ${projects}">
+    <div class="portfolio-modal modal fade" th:id="${project.id}" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-content">
+            <div class="close-modal" data-dismiss="modal">
+                <div class="lr">
+                    <div class="rl">
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-lg-offset-2">
+                        <div class="modal-body">
+                            <h2 th:text = "${project.name}"></h2>
+                            <hr class="star-primary">
+                            <img th:src = "'img/portfolioNext/' + ${project.image} + '.png'" class="img-responsive img-centered" alt="">
+                            <p th:text="${project.description}"></p>
+                            <br class="list-inline item-details">
+                            <li>Technologie:
+                                <strong><a th:text="${project.technologies}"></a>
+                                </strong>
+                            </li>
+                            <p><li>Github:
+                            <strong><a href="https://github.com/PiotrGalkowski" th:text="${project.name}"></a>
+                            </strong>
+                        </li></p>
+                            <br>
+                            <li>Data:
+                                <strong><a th:text="${project.date}"></a>
+                                </strong>
+                            </li>
+                            </ul>
+                            <br>
+                            <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i>Zamknij</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+<div class="portfolio-modal modal fade" id="portfolioUpdate" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-content">
+        <div class="close-modal" data-dismiss="modal">
+            <div class="lr">
+                <div class="rl">
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2">
+                    <div class="modal-body">
+                        <form th:action="@{addProject}" th:object="${project}" method="post">
+                            <h2>Dane projektu:</h2>
+                            <input type="text" th:field="*{name}" placeholder="Nazwa projektu">
+                            <input type="text" th:field="*{description}" placeholder="Opis">
+                            <input type="text" th:field="*{technologies}" placeholder="Technologie">
+                            <input type="text" th:field="*{author}" placeholder="Autor">
+                            <input type="text" th:field="*{date}" placeholder="Data: rrrr-mm-dd">
+                            <input type="text" th:field="*{image}" placeholder="Nazwa zdjęcia">
+
+                            <button type="submit" class="btn btn-right btn-success btn-lg">Zapisz</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+
+<!-- jQuery -->
+<script src="vendor/jquery/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+
+<!-- Plugin JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+
+
+<!-- Theme JavaScript -->
+<script src="js/freelancer.min.js"></script>
+
+</body>
+
+</html>
