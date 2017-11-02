@@ -48,15 +48,14 @@ public class SecureController {
 
         Optional<User> user = userRepository.findByUsername(username);
 
-        for (User users : userRepository.findAll()) {
-            if (users.getUsername().equals(username)) {
-                if (password.equals(user.get().getPassword())) {
-                    userInfo.setLogged(true);
-                    userInfo.setUser(user.get());
-                    return "redirect:/adminView";
-                }
-            }
+        if(user.isPresent() && password.equals(user.get().getPassword())) {
+
+            userInfo.setLogged(true);
+            userInfo.setUser(user.get());
+
+            return "redirect:/adminView";
         }
+
         model.addAttribute("info", true);
 
         return "login";

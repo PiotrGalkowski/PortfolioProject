@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import pl.javaprogrammer.portfolio.form.ContactForm;
 
 import javax.annotation.PostConstruct;
 import javax.mail.MessagingException;
@@ -16,15 +17,15 @@ public class MailService {
     @Autowired
     private JavaMailSender javaMailSender;
 
-    public void sendEmail(String name, String phoneNumber, String mailFrom, String message){
+    public void sendEmail(ContactForm contactForm){
 
         MimeMessage mail = javaMailSender.createMimeMessage();
         try {
             MimeMessageHelper helper = new MimeMessageHelper(mail, true);
             helper.setTo("piotrgalkowski81@gmail.com");
-            helper.setFrom(new InternetAddress(mailFrom));
-            helper.setSubject("Wiadomość od " + name + ".");
-            helper.setText(message + "<br><br><br> Telefon: " + phoneNumber + "<br> E-mail: " + mailFrom, true);
+            helper.setFrom(new InternetAddress(contactForm.getEmail()));
+            helper.setSubject("Wiadomość od " + contactForm.getName() + ".");
+            helper.setText(contactForm.getMessage() + "<br><br><br> Telefon: " + contactForm.getPhoneNumber() + "<br> E-mail: " + contactForm.getEmail(), true);
 
         } catch (MessagingException e) {
             e.printStackTrace();

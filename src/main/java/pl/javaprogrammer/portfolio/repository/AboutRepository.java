@@ -5,6 +5,8 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 import pl.javaprogrammer.portfolio.entity.About;
 
+import javax.persistence.NamedNativeQuery;
+import java.lang.annotation.Native;
 
 
 @Repository

@@ -42,12 +42,12 @@ public class UpdateController {
     }
 
 
+    /**Update section about*/
     @PostMapping(value = "/adminView")
     public String updateAbout(@RequestParam("description") String description) {
 
         About about = new About();
 
-        //UPDATE ABOUT SECTION
         about.setDescription(description);
 
         aboutRepository.deleteAll();

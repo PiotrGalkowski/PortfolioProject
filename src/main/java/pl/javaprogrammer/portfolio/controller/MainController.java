@@ -36,18 +36,9 @@ public class MainController {
     }
 
     @PostMapping(value = "/")
-    public String contactForm(@ModelAttribute("contactForm") ContactForm contact, Model model) {
+    public String contactForm(@ModelAttribute("contactForm") ContactForm contact) {
 
-        model.addAttribute("contactForm", new ContactForm());
-
-        Context context = new Context();
-
-        context.setVariable("name", contact.getName());
-        context.setVariable("email", contact.getEmail());
-        context.setVariable("phoneNumber", contact.getPhoneNumber());
-        context.setVariable("message", contact.getMessage());
-
-        mailService.sendEmail(contact.getName(), contact.getPhoneNumber(), contact.getEmail(), contact.getMessage());
+        mailService.sendEmail(contact);
 
         return "redirect:/";
     }
